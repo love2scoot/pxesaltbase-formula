@@ -1,0 +1,3 @@
+base:
+  '*':
+    - saltbase_install

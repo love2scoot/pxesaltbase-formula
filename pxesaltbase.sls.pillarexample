@@ -1,0 +1,4 @@
+PXE_MENU_TITLE: 'DevOps Awesome PXE Boot Menu'
+PXE_DNS_NAME: 'pxe.bobbarker.com'
+DEFAULT_ROOT_PASSWORD: 'INeedToBeChanged'
+CRYPTED_ROOT_PASSWORD: '$1$ROnGTxWk$yaVNw1c07.K2y8VJfmFQF0'

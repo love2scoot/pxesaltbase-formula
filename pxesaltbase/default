@@ -1,0 +1,36 @@
+# D-I config version 2.0
+# search path for the c32 support libraries (libcom32, libutil etc.)
+# path ubuntu-installer/amd64/boot-screens/
+# include ubuntu-installer/amd64/boot-screens/menu.cfg
+
+DEFAULT vesamenu.c32
+PROMPT 0
+TIMEOUT 300
+
+MENU TITLE {{ pillar.get('PXE_MENU_TITLE') }}
+MENU AUTOBOOT Starting Local System in # seconds
+
+LABEL bootlocal
+   MENU LABEL ^1) Boot to Local Drive
+   MENU DEFAULT
+   LOCALBOOT 0
+ 
+LABEL Ub1604x64Live
+   MENU LABEL ^2) Ubuntu 16.04x64 Desktop Live Boot
+   KERNEL ubuntu1604x64live/vmlinuz.efi
+   APPEND vga=normal boot=casper rootfstype=nfs netboot=nfs nfsroot={{ pillar.get('PXE_DNS_NAME') }}:/var/www/html/ubuntu1604x64live/ initrd=ubuntu1604x64live/initrd.lz splash --
+
+LABEL Ub1604x64Server
+   MENU LABEL ^3) Ubuntu 16.04x64 Server SaltBase Install
+   KERNEL ubuntu1604x64server/linux
+   APPEND initrd=ubuntu1604x64server/initrd.gz locale=en_US.UTF-8 keyboard-configuration/layoutcode=us hostname=unassigned netcfg/choose_interface=auto url=http://{{ pillar.get('PXE_DNS_NAME') }}/ub1604x64server.preseed
+
+LABEL Ub1404x64Server
+   MENU LABEL ^4) Ubuntu 14.04x64 Server SaltBase Install
+   KERNEL ubuntu1404x64server/linux
+   APPEND initrd=ubuntu1404x64server/initrd.gz locale=en_US.UTF-8 keyboard-configuration/layoutcode=us hostname=unassigned netcfg/choose_interface=auto url=http://{{ pillar.get('PXE_DNS_NAME') }}/ub1404x64server.preseed
+
+LABEL Memtest
+   MENU LABEL ^5) Memtest
+   ROOT (hd0,0)
+   KERNEL memtest/memtest
